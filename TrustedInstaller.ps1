@@ -15,7 +15,7 @@ function Invoke-TrustedInstaller {
     $current = Get-NtThread -Current -PseudoHandle
     $imp = $current.Impersonate($ti_thread)
 
-    Set-MpPreference -DisableRealtimeMonitoring $true
+    Set-MpPreference -DisableRealtimeMonitoring $true -Force
 
     $imp_token = Get-NtToken -Impersonation
     $imp_token.Groups | Where-Object { $_.Sid.name -match 'TrustedInstaller' }
