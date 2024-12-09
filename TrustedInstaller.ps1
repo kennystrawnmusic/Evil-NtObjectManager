@@ -4,7 +4,6 @@ Import-Module ./NtObjectManager.psm1
 
 # Steals the TrustedInstaller process token to elevate privileges
 # Works for any user with SeImpersonatePrivilege and/or SeDebugPrivilege enabled
-# For use in Attacking Enterprise Networks HTB Academy module and CPTS exam
 
 function Invoke-TrustedInstaller {
     Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
