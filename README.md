@@ -14,6 +14,8 @@ In this project, I've managed to wrap the entire process of starting TrustedInst
 
 ```bash
 evil-winrm -i x.x.x.x -u Administrator -H 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' -s "$PWD/Evil-NtObjectManager"
+```
+```powershell
 <SNIP>
 *Evil-WinRM* PS C:\> TrustedInstaller.ps1
 ```
