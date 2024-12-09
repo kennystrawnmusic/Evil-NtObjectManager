@@ -8,11 +8,15 @@ Import-Module ./NtObjectManager.psm1
 function Invoke-TrustedInstaller {
     Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
     Start-NtService TrustedInstaller
+
     $ti = Get-NtService TrustedInstaller
     $ti_thread = $ti.getFirstThread()
+
     $current = Get-NtThread -Current -PseudoHandle
     $imp = $current.Impersonate($ti_thread)
+
     Set-MpPreference -DisableRealtimeMonitoring $true
+    
     $imp_token = Get-NtToken -Impersonation
     $imp_token.Groups | Where-Object { $_.Sid.name -match 'TrustedInstaller' }
 }
