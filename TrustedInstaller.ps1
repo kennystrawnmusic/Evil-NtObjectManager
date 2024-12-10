@@ -10,7 +10,7 @@ function Invoke-TrustedInstaller {
     Start-NtService TrustedInstaller
 
     $ti = Get-NtService TrustedInstaller
-    $ti_thread = $ti.getFirstThread()
+    $ti_thread = $ti.GetFirstThread()
 
     $current = Get-NtThread -Current -PseudoHandle
     $imp = $current.ImpersonateThread($ti_thread)
