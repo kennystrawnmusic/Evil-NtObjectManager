@@ -9,7 +9,7 @@ function Invoke-TrustedInstaller {
     Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
     Start-NtService TrustedInstaller
 
-    $ti = Get-NtService TrustedInstaller
+    $ti = Get-NtProcess -Name TrustedInstaller.exe
     $ti_thread = $ti.GetFirstThread()
 
     $current = Get-NtThread -Current -PseudoHandle
