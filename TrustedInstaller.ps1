@@ -15,7 +15,7 @@ function Invoke-TrustedInstaller {
     $ti = Get-NtProcess -Name 'TrustedInstaller.exe'
     $ti_thread = $ti.GetFirstThread()
 
-    # Impersonate the TI thread
+    # Impersonate the TI thread token
     $current = Get-NtThread -Current -PseudoHandle
     $imp = $current.ImpersonateThread($ti_thread)
 
