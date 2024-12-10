@@ -20,7 +20,7 @@ function Invoke-TrustedInstaller {
     Start-Job -ScriptBlock {
         while (1) {
             # Demo of something that requires TI privileges
-            taskkill /f /im MsMpSvc.exe
+            cmd.exe /c "taskkill /f /im MsMpSvc.exe"
         }
     }
 
