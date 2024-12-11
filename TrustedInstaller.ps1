@@ -67,7 +67,7 @@ function Invoke-TIRevShell {
 
 # Spawns a TLS-encrypted Base64 reverse shell with TI privileges using 'powershell -ep bypass -e'
 # Requires an Internet connection, so not going to be used in any CTF environments,
-# but useful for real engagements where you need to exfiltrate data securely
+# but useful for real engagements where OPSEC is more important.
 
 function Invoke-TIRevShellTLS {
     param(
