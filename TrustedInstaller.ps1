@@ -9,7 +9,7 @@ function Invoke-TrustedInstaller {
     Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
 
     # Start the TI service
-    Start-NtService TrustedInstaller
+    Start-Service TrustedInstaller
 
     # Extract the TI thread object
     $ti = Get-NtProcess -Name 'TrustedInstaller.exe'
@@ -30,7 +30,7 @@ function Invoke-TrustedInstaller {
         }
     }
     
-    Discoonnect-Job -Job $ps
+    Disconnect-Job -Job $ps
 
     # Print proof that we've successfully impersonated TI
     $imp_token = Get-NtToken -Impersonation
